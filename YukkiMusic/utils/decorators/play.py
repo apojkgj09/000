@@ -74,7 +74,7 @@ def PlayWrapper(command):
                     caption=_["playlist_1"],
                     reply_markup=InlineKeyboardMarkup(buttons),
                 )
-        if message.sender_chat:
+       # if message.sender_chat:
            # upl = InlineKeyboardMarkup(
               #  [
                #     [
