@@ -75,18 +75,18 @@ def PlayWrapper(command):
                     reply_markup=InlineKeyboardMarkup(buttons),
                 )
         if message.sender_chat:
-            upl = InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            text="How to Fix this? ",
-                            callback_data="AnonymousAdmin",
-                        ),
-                    ]
-                ]
-            )
-            return await message.reply_text(
-                _["general_4"], reply_markup=upl
+           # upl = InlineKeyboardMarkup(
+              #  [
+               #     [
+              #          InlineKeyboardButton(
+                 #           text="How to Fix this? ",
+                  #          callback_data="AnonymousAdmin",
+                     #   ),
+                 #   ]
+             #   ]
+          #  )
+          #  return await message.reply_text(
+           #     _["general_4"], reply_markup=upl
             )
         if message.command[0][0] == "c":
             chat_id = await get_cmode(message.chat.id)
