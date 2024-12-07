@@ -42,18 +42,18 @@ def AdminRightsCheck(mystic):
             _ = get_string(language)
         except:
             _ = get_string("en")
-        if message.sender_chat:
-            upl = InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            text="How to Fix this? ",
-                            callback_data="AnonymousAdmin",
-                        ),
-                    ]
-                ]
-            )
-            return await message.reply_text(_["general_4"], reply_markup=upl)
+       # if message.sender_chat:
+           # upl = InlineKeyboardMarkup(
+              #  [
+                #    [
+                   #     InlineKeyboardButton(
+                     #       text="How to Fix this? ",
+                      #      callback_data="AnonymousAdmin",
+                    #    ),
+                #    ]
+              #  ]
+           # )
+           # return await message.reply_text(_["general_4"], reply_markup=upl)
         if message.command[0][0] == "c":
             chat_id = await get_cmode(message.chat.id)
             if chat_id is None:
@@ -97,18 +97,18 @@ def AdminActual(mystic):
             _ = get_string(language)
         except:
             _ = get_string("en")
-        if message.sender_chat:
-            upl = InlineKeyboardMarkup(
-                [
-                    [
-                        InlineKeyboardButton(
-                            text="How to Fix this? ",
-                            callback_data="AnonymousAdmin",
-                        ),
-                    ]
-                ]
-            )
-            return await message.reply_text(_["general_4"], reply_markup=upl)
+      #  if message.sender_chat:
+          #  upl = InlineKeyboardMarkup(
+              #  [
+                 #   [
+                  #      InlineKeyboardButton(
+                     #       text="How to Fix this? ",
+                    #        callback_data="AnonymousAdmin",
+                   #     ),
+                #    ]
+             #   ]
+        #    )
+           # return await message.reply_text(_["general_4"], reply_markup=upl)
         if message.from_user.id not in SUDOERS:
             try:
                 member = await app.get_chat_member(
