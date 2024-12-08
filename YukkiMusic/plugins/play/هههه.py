@@ -44,8 +44,7 @@ async def welcome_new_member(client: Client, message: Message):
                 )
         
         # التعامل مع إضافة البوت إلى مجموعة جديدة
-        
-        @app.on_message(filters.left_chat_member)
+@app.on_message(filters.left_chat_member)
 async def leftmem(client, message):
     logging.info("A member left the group")  # التحقق من تنفيذ الكود
     
