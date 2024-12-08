@@ -59,6 +59,11 @@
         "description": "Your heroku app/bot's name",
         "value": "mongodb",
         "required": false
+        },
+      "SPOTIFY_PLAYLIST_IMG_URL": {
+        "description": "رابط صوره start او اتركه كما هو.",
+        "value": "https://envs.sh/5WG.jpg",
+        "required": true
       },
       "LOG_GROUP_ID": {
         "description": "Your Log Group ID, add your bot and promote as an admin with full rights!. Use only Group. Please don't use Channel ID.",
