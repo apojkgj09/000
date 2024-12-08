@@ -91,7 +91,7 @@ async def welcome_new_member(client: Client, message: Message):
                 f"𝐰𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 𝐭𝐡𝐞 𝐠𝐫𝐨𝐮𝐩.🧸\n\n"
                 f"{chat.title}\n\n"
                 f"neme : {message.from_user.mention}\n"
-                f"id : `{message.from_user.id}`\n
+                f"id : `{message.from_user.id}`\n"
                 f"➥• Welcome  : {new_member.mention}\n"
                 f"➥• User : @{new_member.username or 'No username'}\n"
                 f"➥• time : {now.strftime('%I:%M %p')}\n"
