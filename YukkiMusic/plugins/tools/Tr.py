@@ -29,7 +29,7 @@ async def translate(_, message) -> None:
             dest = args
     except IndexError:
         source = await trans.detect(to_translate)
-        dest = "en","ar"
+        dest = "ar"
     translation = await trans(to_translate, sourcelang=source, targetlang=dest)
     reply = (
         f"ᴛʀᴀɴsʟᴀᴛᴇᴅ ғʀᴏᴍ {source} to {dest}:\n"
