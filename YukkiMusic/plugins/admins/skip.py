@@ -27,15 +27,13 @@ from YukkiMusic.utils.thumbnails import gen_thumb
 SKIP_COMMAND = get_command("SKIP_COMMAND")
 
 
-@app.on_message(filters.command(SKIP_COMMAND)
-
-   
-    & ~BANNED_USERS
+@app.on_message(filters.command(["تخطي","التالي","/skip"],"")
+   & filters.group          
+   & ~BANNED_USERS
 )
-@app.on_message(filters.command(["التالي","تخطي","نيو تخطي"],"")
-
-   
-    & ~BANNED_USERS
+@app.on_message(filters.command(["التالي","تخطي","/skip"],"")
+& filters.channel          
+& ~BANNED_USERS
 )
 @AdminRightsCheckCB
 async def skip(cli, message: Message, _, chat_id):
