@@ -20,8 +20,12 @@ from pyrogram.errors import (ChatAdminRequired,
 from pyrogram.types import InlineKeyboardMarkup
 from pytgcalls import PyTgCalls, filters
 from pytgcalls.exceptions import AlreadyJoinedError
-from pytgcalls.types import (JoinedGroupCallParticipant,
-                             LeftGroupCallParticipant, Update)
+from pytgcalls.types import (
+    ChatUpdate,
+    GroupCallConfig,
+    MediaStream,
+    Update,
+)
 from pytgcalls.types.input_stream import AudioPiped, AudioVideoPiped
 from pytgcalls.types.stream import StreamAudioEnded
 
