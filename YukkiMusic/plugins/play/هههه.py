@@ -44,31 +44,37 @@ async def welcome_new_member(client: Client, message: Message):
                 )
         
         # التعامل مع إضافة البوت إلى مجموعة جديدة
-        if new_member.id == bot_id:
-            added_by = message.from_user.first_name if message.from_user else "مستخدم غير معروف"
-            added_id = message.from_user.id
-            served_chats = len(await get_served_chats())
-            cont = await app.get_chat_members_count(chat.id)
-            chatusername = message.chat.username or "𝐏ʀɪᴠᴀᴛᴇ 𝐆ʀᴏ𝐮𝐩"
-            
-            caption = (
-                f"🌹 تمت إضافة البوت إلى مجموعة جديدة.\n\n"
-                f" <b>𝙲𝙷𝙰𝚃</b> › : {chat.title}\n"
-                f" <b>𝙲𝙷𝙰𝚃 𝙸𝙳</b> › : {chat.id}\n"
-                f" <b>𝙲𝙷𝙰𝚃 𝚄𝙽𝙰𝙼𝙴</b> › : @{chatusername}\n"
-                f" <b>𝙲𝙾𝚄𝙽𝚃</b> › : {cont}\n"
-                f" <b>𝚃𝙾𝚃𝙰𝙻 𝙲𝙷𝙰𝚃𝚂</b> › : {served_chats}\n"
-                f" <b>𝙰𝙳𝙳𝙴𝙳 𝙱𝚈</b> › : <a href='tg://user?id={added_id}'>{added_by}</a>"
-            )
-            
-            await app.send_photo(
-                LOGGER_ID,
-                photo=random.choice(photo_urls),
-                caption=caption,
-                reply_markup=InlineKeyboardMarkup(
-                    [[InlineKeyboardButton(added_by, url=f"tg://openmessage?user_id={added_id}")]]
-                )
-            )
+        
+        @app.on_message(filters.left_chat_member)
+async def leftmem(client, message):
+    logging.info("A member left the group")  # التحقق من تنفيذ الكود
+    
+    chat = await app.get_chat(message.chat.id)
+    gti = chat.title
+    link = await app.export_chat_invite_link(message.chat.id)
+
+    user_id = message.left_chat_member.id
+
+    chat_id = message.chat.id
+    async for member in client.get_chat_members(chat_id):
+        if member.status == ChatMemberStatus.OWNER:  # جلب منشئ المجموعة فقط
+            owner_id = member.user.id
+            owner_name = member.user.first_name
+
+    buttons = [
+        [
+            InlineKeyboardButton(f"{owner_name}", url=f"tg://openmessage?user_id={owner_id}")
+        ],[
+            InlineKeyboardButton(gti, url=f"{link}")
+        ],
+    ]
+    reply_markup = InlineKeyboardMarkup(buttons)
+    
+    await app.send_message(user_id, f"<b>- ليه تركت المجموعة ياحلو [ {message.left_chat_member.mention} ⁪⁬⁮⁮⁮⁮].\n\n</b>"
+                                    f"<b>• اذا تبي ترجع للمجموعة {gti}\n</b>"
+                                    f"<b>• رابط المجموعة في الاسفل\n</b>"
+                                    f"<a href='{link}'>ㅤ</a>",
+                                    reply_markup=reply_markup)
         
         # ترحيب بالأعضاء الجدد
         else:
