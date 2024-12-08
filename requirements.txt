@@ -15,6 +15,7 @@ pykeyboard
 pyrogram==2.0.106
 python-dotenv
 PyYAML==5.3.1
+gpytranslate
 requests
 speedtest-cli
 spotipy
