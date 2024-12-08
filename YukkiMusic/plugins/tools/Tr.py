@@ -1,38 +1,15 @@
-from pyrogram import filters
-from pyrogram.types import *
+from pyrogram import Client, filters
+from datetime import datetime
+import pytz
 from YukkiMusic import app
-from gpytranslate import Translator
 
-#.......
 
-trans = Translator()
+def get_current_time():
+    tz = pytz.timezone('Asia/Riyadh')  # Setting the timezone to India (Kolkata)
+    current_time = datetime.now(tz)
+    return current_time.strftime("%Y-%m-%d \n %H:%M:%S %Z%z")
 
-#......
-
-@app.on_message(filters.command("tr"))
-async def translate(_, message) -> None:
-    reply_msg = message.reply_to_message
-    if not reply_msg:
-        await message.reply_text("ʀᴇᴘʟʏ ᴛᴏ ᴀ ᴍᴇssᴀɢᴇ ᴛᴏ ᴛʀᴀɴsʟᴀᴛᴇ ɪᴛ !")
-        return
-    if reply_msg.caption:
-        to_translate = reply_msg.caption
-    elif reply_msg.text:
-        to_translate = reply_msg.text
-    try:
-        args = message.text.split()[1].lower()
-        if "//" in args:
-            source = args.split("//")[0]
-            dest = args.split("//")[1]
-        else:
-            source = await trans.detect(to_translate)
-            dest = args
-    except IndexError:
-        source = await trans.detect(to_translate)
-        dest = "ar"
-    translation = await trans(to_translate, sourcelang=source, targetlang=dest)
-    reply = (
-        f"ᴛʀᴀɴsʟᴀᴛᴇᴅ ғʀᴏᴍ {source} to {dest}:\n"
-        f"{translation.text}"
-    )
-    await message.reply_text(reply)
+@app.on_message(filters.command(["Time"]))
+def send_time(client, message):
+    time = get_current_time()
+    client.send_message(message.chat.id, f"Current time in India: {time}")  
