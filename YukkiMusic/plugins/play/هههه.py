@@ -10,7 +10,7 @@ from YukkiMusic.utils.decorators import AdminActual
 from YukkiMusic.utils.databassse import is_welcome_enabled, enable_welcome, disable_welcome
 from pyrogram.enums import ChatMembersFilter
 
-urlm = "https://telegra.ph/file/a78511ddc8f5984416836.jpg"
+urlm = SPOTIFY_PLAYLIST_IMG_URL,
 photo_urls = [
     "https://envs.sh/Wi_.jpg",
     "https://envs.sh/Wi_.jpg",
@@ -33,47 +33,42 @@ async def welcome_new_member(client: Client, message: Message):
             
             if not photos:
                 await message.reply_text(
-                    f"↢ مرحباً مطوري <a href='tg://user?id={dev_id}'>{name}</a> نورت الشات ياعزيزي🧸",
+                    f"↢ مرحباً مطوري <a href='tg://user?id={dev_id}'>{name}</a> نورت المجموعة ياعزيزي🧸",
                     reply_markup=markup
                 )
             else:
                 await message.reply_photo(
                     photos[0].file_id,
-                    caption=f"↢ مرحباً مطوري <a href='tg://user?id={dev_id}'>{name}</a> نورت الشات ياعزيزي🧸",
+                    caption=f"↢ مرحباً مطوري <a href='tg://user?id={dev_id}'>{name}</a> نورت المجموعة ياعزيزي🧸",
                     reply_markup=markup
                 )
         
         # التعامل مع إضافة البوت إلى مجموعة جديدة
-@app.on_message(filters.left_chat_member)
-async def leftmem(client, message):
-    logging.info("A member left the group")  # التحقق من تنفيذ الكود
-    
-    chat = await app.get_chat(message.chat.id)
-    gti = chat.title
-    link = await app.export_chat_invite_link(message.chat.id)
-
-    user_id = message.left_chat_member.id
-
-    chat_id = message.chat.id
-    async for member in client.get_chat_members(chat_id):
-        if member.status == ChatMemberStatus.OWNER:  # جلب منشئ المجموعة فقط
-            owner_id = member.user.id
-            owner_name = member.user.first_name
-
-    buttons = [
-        [
-            InlineKeyboardButton(f"{owner_name}", url=f"tg://openmessage?user_id={owner_id}")
-        ],[
-            InlineKeyboardButton(gti, url=f"{link}")
-        ],
-    ]
-    reply_markup = InlineKeyboardMarkup(buttons)
-    
-    await app.send_message(user_id, f"<b>- ليه تركت المجموعة ياحلو [ {message.left_chat_member.mention} ⁪⁬⁮⁮⁮⁮].\n\n</b>"
-                                    f"<b>• اذا تبي ترجع للمجموعة {gti}\n</b>"
-                                    f"<b>• رابط المجموعة في الاسفل\n</b>"
-                                    f"<a href='{link}'>ㅤ</a>",
-                                    reply_markup=reply_markup)
+        if new_member.id == bot_id:
+            added_by = message.from_user.first_name if message.from_user else "مستخدم غير معروف"
+            added_id = message.from_user.id
+            served_chats = len(await get_served_chats())
+            cont = await app.get_chat_members_count(chat.id)
+            chatusername = message.chat.username or "𝐏ʀɪᴠᴀᴛᴇ 𝐆ʀᴏ𝐮𝐩"
+            
+            caption = (
+                f"🌹 تمت إضافة البوت إلى مجموعة جديدة.\n\n"
+                f" <b>𝙲𝙷𝙰𝚃</b> › : {chat.title}\n"
+                f" <b>𝙲𝙷𝙰𝚃 𝙸𝙳</b> › : {chat.id}\n"
+                f" <b>𝙲𝙷𝙰𝚃 𝚄𝙽𝙰𝙼𝙴</b> › : @{chatusername}\n"
+                f" <b>𝙲𝙾𝚄𝙽𝚃</b> › : {cont}\n"
+                f" <b>𝚃𝙾𝚃𝙰𝙻 𝙲𝙷𝙰𝚃𝚂</b> › : {served_chats}\n"
+                f" <b>𝙰𝙳𝙳𝙴𝙳 𝙱𝚈</b> › : <a href='tg://user?id={added_id}'>{added_by}</a>"
+            )
+            
+            await app.send_photo(
+                LOGGER_ID,
+                photo=random.choice(photo_urls),
+                caption=caption,
+                reply_markup=InlineKeyboardMarkup(
+                    [[InlineKeyboardButton(added_by, url=f"tg://openmessage?user_id={added_id}")]]
+                )
+            )
         
         # ترحيب بالأعضاء الجدد
         else:
@@ -93,14 +88,13 @@ async def leftmem(client, message):
             now = datetime.utcnow() + timedelta(hours=3)
             welcome_text = (
                 f"<a href='{urlm}'>‌‌</a>"
-                f"𝐰𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 𝐭𝐡𝐞 𝐠𝐫𝐨𝐮𝐩.🧸\n\n"
+                f"𝐰𝐞𝐥𝐜𝐨𝐦𝐞 𝐭𝐨 𝐭𝐡𝐞 𝐠𝐫𝐨𝐮𝐩.\n\n"
                 f"{chat.title}\n\n"
-                f"neme : {message.from_user.mention}\n"
-                f"id : `{message.from_user.id}`\n"
-                f"➥• Welcome  : {new_member.mention}\n"
-                f"➥• User : @{new_member.username or 'No username'}\n"
-                f"➥• time : {now.strftime('%I:%M %p')}\n"
-                f"➥• date : {now.strftime('%Y/%m/%d')}"
+                f"°︙ نورت قروبنا يـ : {new_member.mention}\n"
+                f"°︙ ايديك : `{message.from_user.id}`\n"
+                f"°︙ يوزرك : @{new_member.username or 'No username'}\n\n"
+                f"```°︙ تاريخ انضمامك : {now.strftime('%Y/%m/%d')}"
+                f"°︙ وقت انضمامك: {now.strftime('%I:%M %p')}```\n"
             )
 
             await message.reply_text(welcome_text, reply_markup=keyboard)
