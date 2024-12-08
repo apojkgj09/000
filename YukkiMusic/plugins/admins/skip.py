@@ -225,7 +225,11 @@ async def skip(cli, message: Message, _, chat_id):
 
             
 
-
+@app.on_message(
+    filters.command(["تخطي","التالي"],"")
+    & filters.group
+    & ~BANNED_USERS
+)
 @app.on_message(
     filters.command(SKIP_COMMAND)
     & filters.group
