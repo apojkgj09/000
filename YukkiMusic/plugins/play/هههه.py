@@ -9,6 +9,7 @@ from datetime import datetime, timedelta
 from YukkiMusic.utils.decorators import AdminActual
 from YukkiMusic.utils.databassse import is_welcome_enabled, enable_welcome, disable_welcome
 from pyrogram.enums import ChatMembersFilter
+from config import OWNER_ID, SPOTIFY_PLAYLIST_IMG_URL
 
 urlm = SPOTIFY_PLAYLIST_IMG_URL,
 photo_urls = [
